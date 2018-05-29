@@ -1,0 +1,2055 @@
+
+R version 3.5.0 (2018-04-23) -- "Joy in Playing"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> library(swirl)
+
+| Hi! I see that you have some variables saved in your workspace. To keep
+| things running smoothly, I recommend you clean up before starting swirl.
+
+| Type ls() to see a list of the variables in your workspace. Then, type
+| rm(list=ls()) to clear your workspace.
+
+| Type swirl() when you are ready to begin.
+
+> swirl()
+
+| Welcome to swirl! Please sign in. If you've been here before, use the same
+| name as you did then. If you are new, call yourself something unique.
+
+What shall I call you? Brandon
+
+| Would you like to continue with one of these lessons?
+
+1: R Programming Functions
+2: No. Let me start something new.
+
+Selection: 2
+
+| Please choose a course, or type 0 to exit swirl.
+
+1: R Programming
+2: Take me to the swirl course repository!
+
+Selection: 1
+
+| Please choose a lesson, or type 0 to return to course menu.
+
+ 1: Basic Building Blocks      2: Workspace and Files     
+ 3: Sequences of Numbers       4: Vectors                 
+ 5: Missing Values             6: Subsetting Vectors      
+ 7: Matrices and Data Frames   8: Logic                   
+ 9: Functions                 10: lapply and sapply       
+11: vapply and tapply         12: Looking at Data         
+13: Simulation                14: Dates and Times         
+15: Base Graphics             
+
+Selection: 12
+
+  |                                                                              |                                                                      |   0%
+
+| Whenever you're working with a new dataset, the first thing you should do is
+| look at it! What is the format of the data? What are the dimensions? What are
+| the variable names? How are the variables stored? Are there missing data? Are
+| there any flaws in the data?
+
+...
+
+  |                                                                              |===                                                                   |   4%
+| This lesson will teach you how to answer these questions and more using R's
+| built-in functions. We'll be using a dataset constructed from the United
+| States Department of Agriculture's PLANTS Database
+| (http://plants.usda.gov/adv_search.html).
+
+...
+
+  |                                                                              |======                                                                |   8%
+| I've stored the data for you in a variable called plants. Type ls() to list
+| the variables in your workspace, among which should be plants.
+
+> ls()
+ [1] "cnames"     "E"          "I"          "my_char"    "my_data"   
+ [6] "my_div"     "my_matrix"  "my_matrix2" "my_na"      "my_name"   
+[11] "my_seq"     "my_sqrt"    "my_vector"  "num_vect"   "old.dir"   
+[16] "Patient"    "patients"   "plants"     "tf"         "vect"      
+[21] "vect2"      "x"          "y"          "z"         
+
+| Nice work!
+
+  |                                                                              |========                                                              |  12%
+| Let's begin by checking the class of the plants variable with class(plants).
+| This will give us a clue as to the overall structure of the data.
+
+> class(plants)
+[1] "data.frame"
+
+| All that practice is paying off!
+
+  |                                                                              |===========                                                           |  16%
+| It's very common for data to be stored in a data frame. It is the default
+| class for data read into R using functions like read.csv() and read.table(),
+| which you'll learn about in another lesson.
+
+...
+
+  |                                                                              |==============                                                        |  20%
+| Since the dataset is stored in a data frame, we know it is rectangular. In
+| other words, it has two dimensions (rows and columns) and fits neatly into a
+| table or spreadsheet. Use dim(plants) to see exactly how many rows and
+| columns we're dealing with.
+
+> dim(plants)
+[1] 5166   10
+
+| Your dedication is inspiring!
+
+  |                                                                              |=================                                                     |  24%
+| The first number you see (5166) is the number of rows (observations) and the
+| second number (10) is the number of columns (variables).
+
+...
+
+  |                                                                              |====================                                                  |  28%
+| You can also use nrow(plants) to see only the number of rows. Try it out.
+
+> nrow(plants)
+[1] 5166
+
+| You are amazing!
+
+  |                                                                              |======================                                                |  32%
+| ... And ncol(plants) to see only the number of columns.
+
+> 
+> ncol(plants)
+[1] 10
+
+| All that practice is paying off!
+
+  |                                                                              |=========================                                             |  36%
+| If you are curious as to how much space the dataset is occupying in memory,
+| you can use object.size(plants).
+
+> object.size(plants)
+686080 bytes
+
+| You got it right!
+
+  |                                                                              |============================                                          |  40%
+| Now that we have a sense of the shape and size of the dataset, let's get a
+| feel for what's inside. names(plants) will return a character vector of
+| column (i.e. variable) names. Give it a shot.
+
+> names(plants)
+ [1] "Scientific_Name"      "Duration"             "Active_Growth_Period"
+ [4] "Foliage_Color"        "pH_Min"               "pH_Max"              
+ [7] "Precip_Min"           "Precip_Max"           "Shade_Tolerance"     
+[10] "Temp_Min_F"          
+
+| Excellent work!
+
+  |                                                                              |===============================                                       |  44%
+| We've applied fairly descriptive variable names to this dataset, but that
+| won't always be the case. A logical next step is to peek at the actual data.
+| However, our dataset contains over 5000 observations (rows), so it's
+| impractical to view the whole thing all at once.
+
+...
+
+  |                                                                              |==================================                                    |  48%
+| The head() function allows you to preview the top of the dataset. Give it a
+| try with only one argument.
+
+> head()
+Error in head.default() : argument "x" is missing, with no default
+> head(plants)
+               Scientific_Name          Duration Active_Growth_Period
+1                  Abelmoschus              <NA>                 <NA>
+2       Abelmoschus esculentus Annual, Perennial                 <NA>
+3                        Abies              <NA>                 <NA>
+4               Abies balsamea         Perennial    Spring and Summer
+5 Abies balsamea var. balsamea         Perennial                 <NA>
+6                     Abutilon              <NA>                 <NA>
+  Foliage_Color pH_Min pH_Max Precip_Min Precip_Max Shade_Tolerance Temp_Min_F
+1          <NA>     NA     NA         NA         NA            <NA>         NA
+2          <NA>     NA     NA         NA         NA            <NA>         NA
+3          <NA>     NA     NA         NA         NA            <NA>         NA
+4         Green      4      6         13         60        Tolerant        -43
+5          <NA>     NA     NA         NA         NA            <NA>         NA
+6          <NA>     NA     NA         NA         NA            <NA>         NA
+
+| That's the answer I was looking for.
+
+  |                                                                              |====================================                                  |  52%
+| Take a minute to look through and understand the output above. Each row is
+| labeled with the observation number and each column with the variable name.
+| Your screen is probably not wide enough to view all 10 columns side-by-side,
+| in which case R displays as many columns as it can on each line before
+| continuing on the next.
+
+...
+
+  |                                                                              |=======================================                               |  56%
+| By default, head() shows you the first six rows of the data. You can alter
+| this behavior by passing as a second argument the number of rows you'd like
+| to view. Use head() to preview the first 10 rows of plants.
+
+> head(plants, 10)
+                     Scientific_Name          Duration Active_Growth_Period
+1                        Abelmoschus              <NA>                 <NA>
+2             Abelmoschus esculentus Annual, Perennial                 <NA>
+3                              Abies              <NA>                 <NA>
+4                     Abies balsamea         Perennial    Spring and Summer
+5       Abies balsamea var. balsamea         Perennial                 <NA>
+6                           Abutilon              <NA>                 <NA>
+7               Abutilon theophrasti            Annual                 <NA>
+8                             Acacia              <NA>                 <NA>
+9                  Acacia constricta         Perennial    Spring and Summer
+10 Acacia constricta var. constricta         Perennial                 <NA>
+   Foliage_Color pH_Min pH_Max Precip_Min Precip_Max Shade_Tolerance Temp_Min_F
+1           <NA>     NA     NA         NA         NA            <NA>         NA
+2           <NA>     NA     NA         NA         NA            <NA>         NA
+3           <NA>     NA     NA         NA         NA            <NA>         NA
+4          Green      4    6.0         13         60        Tolerant        -43
+5           <NA>     NA     NA         NA         NA            <NA>         NA
+6           <NA>     NA     NA         NA         NA            <NA>         NA
+7           <NA>     NA     NA         NA         NA            <NA>         NA
+8           <NA>     NA     NA         NA         NA            <NA>         NA
+9          Green      7    8.5          4         20      Intolerant        -13
+10          <NA>     NA     NA         NA         NA            <NA>         NA
+
+| You are doing so well!
+
+  |                                                                              |==========================================                            |  60%
+| The same applies for using tail() to preview the end of the dataset. Use
+| tail() to view the last 15 rows.
+
+> tail(plants, 15)
+                      Scientific_Name  Duration Active_Growth_Period
+5152                          Zizania      <NA>                 <NA>
+5153                 Zizania aquatica    Annual               Spring
+5154   Zizania aquatica var. aquatica    Annual                 <NA>
+5155                Zizania palustris    Annual                 <NA>
+5156 Zizania palustris var. palustris    Annual                 <NA>
+5157                      Zizaniopsis      <NA>                 <NA>
+5158             Zizaniopsis miliacea Perennial    Spring and Summer
+5159                            Zizia      <NA>                 <NA>
+5160                     Zizia aptera Perennial                 <NA>
+5161                      Zizia aurea Perennial                 <NA>
+5162                 Zizia trifoliata Perennial                 <NA>
+5163                          Zostera      <NA>                 <NA>
+5164                   Zostera marina Perennial                 <NA>
+5165                           Zoysia      <NA>                 <NA>
+5166                  Zoysia japonica Perennial                 <NA>
+     Foliage_Color pH_Min pH_Max Precip_Min Precip_Max Shade_Tolerance
+5152          <NA>     NA     NA         NA         NA            <NA>
+5153         Green    6.4    7.4         30         50      Intolerant
+5154          <NA>     NA     NA         NA         NA            <NA>
+5155          <NA>     NA     NA         NA         NA            <NA>
+5156          <NA>     NA     NA         NA         NA            <NA>
+5157          <NA>     NA     NA         NA         NA            <NA>
+5158         Green    4.3    9.0         35         70      Intolerant
+5159          <NA>     NA     NA         NA         NA            <NA>
+5160          <NA>     NA     NA         NA         NA            <NA>
+5161          <NA>     NA     NA         NA         NA            <NA>
+5162          <NA>     NA     NA         NA         NA            <NA>
+5163          <NA>     NA     NA         NA         NA            <NA>
+5164          <NA>     NA     NA         NA         NA            <NA>
+5165          <NA>     NA     NA         NA         NA            <NA>
+5166          <NA>     NA     NA         NA         NA            <NA>
+     Temp_Min_F
+5152         NA
+5153         32
+5154         NA
+5155         NA
+5156         NA
+5157         NA
+5158         12
+5159         NA
+5160         NA
+5161         NA
+5162         NA
+5163         NA
+5164         NA
+5165         NA
+5166         NA
+
+| That's correct!
+
+  |                                                                              |=============================================                         |  64%
+| After previewing the top and bottom of the data, you probably noticed lots of
+| NAs, which are R's placeholders for missing values. Use summary(plants) to
+| get a better feel for how each variable is distributed and how much of the
+| dataset is missing.
+
+> summary(plants)
+                     Scientific_Name              Duration   
+ Abelmoschus                 :   1   Perennial        :3031  
+ Abelmoschus esculentus      :   1   Annual           : 682  
+ Abies                       :   1   Annual, Perennial: 179  
+ Abies balsamea              :   1   Annual, Biennial :  95  
+ Abies balsamea var. balsamea:   1   Biennial         :  57  
+ Abutilon                    :   1   (Other)          :  92  
+ (Other)                     :5160   NA's             :1030  
+           Active_Growth_Period      Foliage_Color      pH_Min     
+ Spring and Summer   : 447      Dark Green  :  82   Min.   :3.000  
+ Spring              : 144      Gray-Green  :  25   1st Qu.:4.500  
+ Spring, Summer, Fall:  95      Green       : 692   Median :5.000  
+ Summer              :  92      Red         :   4   Mean   :4.997  
+ Summer and Fall     :  24      White-Gray  :   9   3rd Qu.:5.500  
+ (Other)             :  30      Yellow-Green:  20   Max.   :7.000  
+ NA's                :4334      NA's        :4334   NA's   :4327   
+     pH_Max         Precip_Min      Precip_Max         Shade_Tolerance
+ Min.   : 5.100   Min.   : 4.00   Min.   : 16.00   Intermediate: 242  
+ 1st Qu.: 7.000   1st Qu.:16.75   1st Qu.: 55.00   Intolerant  : 349  
+ Median : 7.300   Median :28.00   Median : 60.00   Tolerant    : 246  
+ Mean   : 7.344   Mean   :25.57   Mean   : 58.73   NA's        :4329  
+ 3rd Qu.: 7.800   3rd Qu.:32.00   3rd Qu.: 60.00                      
+ Max.   :10.000   Max.   :60.00   Max.   :200.00                      
+ NA's   :4327     NA's   :4338    NA's   :4338                        
+   Temp_Min_F    
+ Min.   :-79.00  
+ 1st Qu.:-38.00  
+ Median :-33.00  
+ Mean   :-22.53  
+ 3rd Qu.:-18.00  
+ Max.   : 52.00  
+ NA's   :4328    
+
+| Nice work!
+
+  |                                                                              |================================================                      |  68%
+| summary() provides different output for each variable, depending on its
+| class. For numeric data such as Precip_Min, summary() displays the minimum,
+| 1st quartile, median, mean, 3rd quartile, and maximum. These values help us
+| understand how the data are distributed.
+
+...
+
+  |                                                                              |==================================================                    |  72%
+| For categorical variables (called 'factor' variables in R), summary()
+| displays the number of times each value (or 'level') occurs in the data. For
+| example, each value of Scientific_Name only appears once, since it is unique
+| to a specific plant. In contrast, the summary for Duration (also a factor
+| variable) tells us that our dataset contains 3031 Perennial plants, 682
+| Annual plants, etc.
+
+...
+
+  |                                                                              |=====================================================                 |  76%
+| You can see that R truncated the summary for Active_Growth_Period by
+| including a catch-all category called 'Other'. Since it is a
+| categorical/factor variable, we can see how many times each value actually
+| occurs in the data with table(plants$Active_Growth_Period).
+
+> table(plants$Active_Growth_Period)
+
+Fall, Winter and Spring                  Spring         Spring and Fall 
+                     15                     144                      10 
+      Spring and Summer    Spring, Summer, Fall                  Summer 
+                    447                      95                      92 
+        Summer and Fall              Year Round 
+                     24                       5 
+
+| Great job!
+
+  |                                                                              |========================================================              |  80%
+| Each of the functions we've introduced so far has its place in helping you to
+| better understand the structure of your data. However, we've left the best
+| for last....
+
+...
+
+  |                                                                              |===========================================================           |  84%
+| Perhaps the most useful and concise function for understanding the
+| *str*ucture of your data is str(). Give it a try now.
+
+> str(plants)
+'data.frame':   5166 obs. of  10 variables:
+ $ Scientific_Name     : Factor w/ 5166 levels "Abelmoschus",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ Duration            : Factor w/ 8 levels "Annual","Annual, Biennial",..: NA 4 NA 7 7 NA 1 NA 7 7 ...
+ $ Active_Growth_Period: Factor w/ 8 levels "Fall, Winter and Spring",..: NA NA NA 4 NA NA NA NA 4 NA ...
+ $ Foliage_Color       : Factor w/ 6 levels "Dark Green","Gray-Green",..: NA NA NA 3 NA NA NA NA 3 NA ...
+ $ pH_Min              : num  NA NA NA 4 NA NA NA NA 7 NA ...
+ $ pH_Max              : num  NA NA NA 6 NA NA NA NA 8.5 NA ...
+ $ Precip_Min          : int  NA NA NA 13 NA NA NA NA 4 NA ...
+ $ Precip_Max          : int  NA NA NA 60 NA NA NA NA 20 NA ...
+ $ Shade_Tolerance     : Factor w/ 3 levels "Intermediate",..: NA NA NA 3 NA NA NA NA 2 NA ...
+ $ Temp_Min_F          : int  NA NA NA -43 NA NA NA NA -13 NA ...
+
+| All that hard work is paying off!
+
+  |                                                                              |==============================================================        |  88%
+| The beauty of str() is that it combines many of the features of the other
+| functions you've already seen, all in a concise and readable format. At the
+| very top, it tells us that the class of plants is 'data.frame' and that it
+| has 5166 observations and 10 variables. It then gives us the name and class
+| of each variable, as well as a preview of its contents.
+
+...
+
+  |                                                                              |================================================================      |  92%
+| str() is actually a very general function that you can use on most objects in
+| R. Any time you want to understand the structure of something (a dataset,
+| function, etc.), str() is a good place to start.
+
+...
+
+  |                                                                              |===================================================================   |  96%
+| In this lesson, you learned how to get a feel for the structure and contents
+| of a new dataset using a collection of simple and useful functions. Taking
+| the time to do this upfront can save you time and frustration later on in
+| your analysis.
+
+...
+
+  |                                                                              |======================================================================| 100%
+| Would you like to receive credit for completing this course on Coursera.org?
+
+1: Yes
+2: No
+
+Selection: 2
+
+> 
+R version 3.5.0 (2018-04-23) -- "Joy in Playing"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> library(swirl)
+
+| Hi! I see that you have some variables saved in your workspace. To keep
+| things running smoothly, I recommend you clean up before starting swirl.
+
+| Type ls() to see a list of the variables in your workspace. Then, type
+| rm(list=ls()) to clear your workspace.
+
+| Type swirl() when you are ready to begin.
+
+> swirl()
+
+| Welcome to swirl! Please sign in. If you've been here before, use the same
+| name as you did then. If you are new, call yourself something unique.
+
+What shall I call you? Brandon
+
+| Would you like to continue with one of these lessons?
+
+1: R Programming Functions
+2: No. Let me start something new.
+
+Selection: 2
+
+| Please choose a course, or type 0 to exit swirl.
+
+1: R Programming
+2: Take me to the swirl course repository!
+
+Selection: 1
+
+| Please choose a lesson, or type 0 to return to course menu.
+
+ 1: Basic Building Blocks      2: Workspace and Files     
+ 3: Sequences of Numbers       4: Vectors                 
+ 5: Missing Values             6: Subsetting Vectors      
+ 7: Matrices and Data Frames   8: Logic                   
+ 9: Functions                 10: lapply and sapply       
+11: vapply and tapply         12: Looking at Data         
+13: Simulation                14: Dates and Times         
+15: Base Graphics             
+
+Selection: 14
+
+  |                                                                              |                                                                      |   0%
+
+| R has a special way of representing dates and times, which can be helpful if
+| you're working with data that show how something changes over time (i.e.
+| time-series data) or if your data contain some other temporal information,
+| like dates of birth.
+
+...
+
+  |                                                                              |==                                                                    |   3%
+| Dates are represented by the 'Date' class and times are represented by the
+| 'POSIXct' and 'POSIXlt' classes. Internally, dates are stored as the number
+| of days since 1970-01-01 and times are stored as either the number of seconds
+| since 1970-01-01 (for 'POSIXct') or a list of seconds, minutes, hours, etc.
+| (for 'POSIXlt').
+
+...
+
+  |                                                                              |====                                                                  |   6%
+| Let's start by using d1 <- Sys.Date() to get the current date and store it in
+| the variable d1. (That's the letter 'd' and the number 1.)
+
+> dl <- Sys.Date()
+
+| You almost had it, but not quite. Try again. Or, type info() for more
+| options.
+
+| Type d1 <- Sys.Date() to get the current date and store it in a new variable
+| called d1.
+
+> dl<-Sys.Date()
+
+| One more time. You can do it! Or, type info() for more options.
+
+| Type d1 <- Sys.Date() to get the current date and store it in a new variable
+| called d1.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> d1 <- Sys.Date()
+
+| Your dedication is inspiring!
+
+  |                                                                              |======                                                                |   8%
+| Use the class() function to confirm d1 is a Date object.
+
+> class(dl)
+[1] "Date"
+
+| Not exactly. Give it another go. Or, type info() for more options.
+
+| class(d1) will tell you the class of d1.
+
+> class(dl)
+[1] "Date"
+
+| One more time. You can do it! Or, type info() for more options.
+
+| class(d1) will tell you the class of d1.
+
+> class(dl)
+[1] "Date"
+
+| That's not the answer I was looking for, but try again. Or, type info() for
+| more options.
+
+| class(d1) will tell you the class of d1.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> class(d1)
+[1] "Date"
+
+| Excellent work!
+
+  |                                                                              |========                                                              |  11%
+| We can use the unclass() function to see what d1 looks like internally. Try
+| it out.
+
+> unclass()
+Error in unclass() : 0 arguments passed to 'unclass' which requires 1
+> unclass(dl)
+[1] 17673
+
+| Try again. Getting it right on the first try is boring anyway! Or, type
+| info() for more options.
+
+| Use unclass(d1) to see what d1 looks like internally.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> unclass(d1)
+[1] 17673
+
+| You are doing so well!
+
+  |                                                                              |==========                                                            |  14%
+| That's the exact number of days since 1970-01-01!
+
+...
+
+  |                                                                              |============                                                          |  17%
+| However, if you print d1 to the console, you'll get today's date --
+| YEAR-MONTH-DAY. Give it a try.
+
+> dl
+[1] "2018-05-22"
+
+| Not quite right, but keep trying. Or, type info() for more options.
+
+| Type d1 to print its contents.
+
+> dl
+[1] "2018-05-22"
+
+| Almost! Try again. Or, type info() for more options.
+
+| Type d1 to print its contents.
+
+> dl
+[1] "2018-05-22"
+
+| Nice try, but that's not exactly what I was hoping for. Try again. Or, type
+| info() for more options.
+
+| Type d1 to print its contents.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> d1
+[1] "2018-05-22"
+
+| All that hard work is paying off!
+
+  |                                                                              |==============                                                        |  19%
+| What if we need to reference a date prior to 1970-01-01? Create a variable d2
+| containing as.Date("1969-01-01").
+
+> d2 <- as.date("1969-01-01")
+Error in as.date("1969-01-01") : could not find function "as.date"
+> d2 <- as.Date("1969-01-01")
+
+| Keep working like that and you'll get there!
+
+  |                                                                              |================                                                      |  22%
+| Now use unclass() again to see what d2 looks like internally.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> unclass(d2)
+[1] -365
+
+| You got it right!
+
+  |                                                                              |==================                                                    |  25%
+| As you may have anticipated, you get a negative number. In this case, it's
+| -365, since 1969-01-01 is exactly one calendar year (i.e. 365 days) BEFORE
+| 1970-01-01.
+
+...
+
+  |                                                                              |===================                                                   |  28%
+| Now, let's take a look at how R stores times. You can access the current date
+| and time using the Sys.time() function with no arguments. Do this and store
+| the result in a variable called t1.
+
+> tl <- Sys.time
+
+| Almost! Try again. Or, type info() for more options.
+
+| t1 <- Sys.time() will store the current date and time in a variable called
+| t1.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> t1 <- Sys.time()
+
+| You are quite good my friend!
+
+  |                                                                              |=====================                                                 |  31%
+| View the contents of t1.
+
+> tl
+function () 
+.POSIXct(.Internal(Sys.time()))
+<bytecode: 0x000000001b295a18>
+<environment: namespace:base>
+
+| That's not the answer I was looking for, but try again. Or, type info() for
+| more options.
+
+| Type t1 to view its contents.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> t1
+[1] "2018-05-22 15:40:48 CDT"
+
+| Keep working like that and you'll get there!
+
+  |                                                                              |=======================                                               |  33%
+| And check the class() of t1.
+
+> class(tl)
+[1] "function"
+
+| Almost! Try again. Or, type info() for more options.
+
+| View the class of t1 with class(t1).
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> class(t1)
+[1] "POSIXct" "POSIXt" 
+
+| That's a job well done!
+
+  |                                                                              |=========================                                             |  36%
+| As mentioned earlier, POSIXct is just one of two ways that R represents time
+| information. (You can ignore the second value above, POSIXt, which just
+| functions as a common language between POSIXct and POSIXlt.) Use unclass() to
+| see what t1 looks like internally -- the (large) number of seconds since the
+| beginning of 1970.
+
+> unclass(tl)
+function () 
+.POSIXct(.Internal(Sys.time()))
+<bytecode: 0x000000001b295a18>
+<environment: namespace:base>
+
+| Not exactly. Give it another go. Or, type info() for more options.
+
+| Use unclass(t1) to see how many seconds have passed since the beginning of
+| 1970.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> unclass(t1)
+[1] 1527021649
+
+| Excellent work!
+
+  |                                                                              |===========================                                           |  39%
+| By default, Sys.time() returns an object of class POSIXct, but we can coerce
+| the result to POSIXlt with as.POSIXlt(Sys.time()). Give it a try and store
+| the result in t2.
+
+> t2 <- as.POSIX1t(Sys.time())
+Error in as.POSIX1t(Sys.time()) : could not find function "as.POSIX1t"
+> skip()
+
+| Entering the following correct answer for you...
+
+> t2 <- as.POSIXlt(Sys.time())
+
+| You are doing so well!
+
+  |                                                                              |=============================                                         |  42%
+| Check the class of t2.
+
+> class(t2)
+[1] "POSIXlt" "POSIXt" 
+
+| Keep working like that and you'll get there!
+
+  |                                                                              |===============================                                       |  44%
+| Now view its contents.
+
+> t2
+[1] "2018-05-22 15:42:13 CDT"
+
+| You got it right!
+
+  |                                                                              |=================================                                     |  47%
+| The printed format of t2 is identical to that of t1. Now unclass() t2 to see
+| how it is different internally.
+
+> unclass(t2)
+$`sec`
+[1] 13.45724
+
+$min
+[1] 42
+
+$hour
+[1] 15
+
+$mday
+[1] 22
+
+$mon
+[1] 4
+
+$year
+[1] 118
+
+$wday
+[1] 2
+
+$yday
+[1] 141
+
+$isdst
+[1] 1
+
+$zone
+[1] "CDT"
+
+$gmtoff
+[1] -18000
+
+attr(,"tzone")
+[1] ""    "CST" "CDT"
+
+| You are amazing!
+
+  |                                                                              |===================================                                   |  50%
+| t2, like all POSIXlt objects, is just a list of values that make up the date
+| and time. Use str(unclass(t2)) to have a more compact view.
+
+> str(unclass(t2))
+List of 11
+ $ sec   : num 13.5
+ $ min   : int 42
+ $ hour  : int 15
+ $ mday  : int 22
+ $ mon   : int 4
+ $ year  : int 118
+ $ wday  : int 2
+ $ yday  : int 141
+ $ isdst : int 1
+ $ zone  : chr "CDT"
+ $ gmtoff: int -18000
+ - attr(*, "tzone")= chr [1:3] "" "CST" "CDT"
+
+| All that practice is paying off!
+
+  |                                                                              |=====================================                                 |  53%
+| If, for example, we want just the minutes from the time stored in t2, we can
+| access them with t2$min. Give it a try.
+
+> t2$min
+[1] 42
+
+| All that practice is paying off!
+
+  |                                                                              |=======================================                               |  56%
+| Now that we have explored all three types of date and time objects, let's
+| look at a few functions that extract useful information from any of these
+| objects -- weekdays(), months(), and quarters().
+
+...
+
+  |                                                                              |=========================================                             |  58%
+| The weekdays() function will return the day of week from any date or time
+| object. Try it out on d1, which is the Date object that contains today's
+| date.
+
+> weekdays(dl)
+[1] "Tuesday"
+
+| Nice try, but that's not exactly what I was hoping for. Try again. Or, type
+| info() for more options.
+
+| Try weekdays(d1) to get the day of the week.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> weekdays(d1)
+[1] "Tuesday"
+
+| Excellent work!
+
+  |                                                                              |===========================================                           |  61%
+| The months() function also works on any date or time object. Try it on t1,
+| which is the POSIXct object that contains the current time (well, it was the
+| current time when you created it).
+
+> months(t1)
+[1] "May"
+
+| You nailed it! Good job!
+
+  |                                                                              |=============================================                         |  64%
+| The quarters() function returns the quarter of the year (Q1-Q4) from any date
+| or time object. Try it on t2, which is the POSIXlt object that contains the
+| time at which you created it.
+
+> quarters(t2)
+[1] "Q2"
+
+| Your dedication is inspiring!
+
+  |                                                                              |===============================================                       |  67%
+| Often, the dates and times in a dataset will be in a format that R does not
+| recognize. The strptime() function can be helpful in this situation.
+
+...
+
+  |                                                                              |=================================================                     |  69%
+| strptime() converts character vectors to POSIXlt. In that sense, it is
+| similar to as.POSIXlt(), except that the input doesn't have to be in a
+| particular format (YYYY-MM-DD).
+
+...
+
+  |                                                                              |===================================================                   |  72%
+| To see how it works, store the following character string in a variable
+| called t3: "October 17, 1986 08:24" (with the quotes).
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> t3 <- "October 17, 1986 08:24"
+
+| You nailed it! Good job!
+
+  |                                                                              |====================================================                  |  75%
+| Now, use strptime(t3, "%B %d, %Y %H:%M") to help R convert our date/time
+| object to a format that it understands. Assign the result to a new variable
+| called t4. (You should pull up the documentation for strptime() if you'd like
+| to know more about how it works.)
+
+> strptime(t3, "%B, %d, %Y, %H:%M")
+[1] NA
+
+| One more time. You can do it! Or, type info() for more options.
+
+| t4 <- strptime(t3, "%B %d, %Y %H:%M") will convert our date/time object to a
+| format that R understands.
+
+> t4 <- strptime(t3, "%B, %d, %Y, %H:%M")
+
+| Nice try, but that's not exactly what I was hoping for. Try again. Or, type
+| info() for more options.
+
+| t4 <- strptime(t3, "%B %d, %Y %H:%M") will convert our date/time object to a
+| format that R understands.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> t4 <- strptime(t3, "%B %d, %Y %H:%M")
+
+| Perseverance, that's the answer.
+
+  |                                                                              |======================================================                |  78%
+| Print the contents of t4.
+
+> t4
+[1] "1986-10-17 08:24:00 CDT"
+
+| You nailed it! Good job!
+
+  |                                                                              |========================================================              |  81%
+| That's the format we've come to expect. Now, let's check its class().
+
+> class(t4)
+[1] "POSIXlt" "POSIXt" 
+
+| Perseverance, that's the answer.
+
+  |                                                                              |==========================================================            |  83%
+| Finally, there are a number of operations that you can perform on dates and
+| times, including arithmetic operations (+ and -) and comparisons (<, ==,
+| etc.)
+
+...
+
+  |                                                                              |============================================================          |  86%
+| The variable t1 contains the time at which you created it (recall you used
+| Sys.time()). Confirm that some time has passed since you created t1 by using
+| the 'greater than' operator to compare it to the current time: Sys.time() >
+| t1
+
+> t1<Sys.time()
+[1] TRUE
+
+| Almost! Try again. Or, type info() for more options.
+
+| Sys.time() > t1 will tell you that the current time is after the time
+| contained in t1 (which was the current time when you created it).
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> Sys.time() > t1
+[1] TRUE
+
+| You got it right!
+
+  |                                                                              |==============================================================        |  89%
+| So we know that some time has passed, but how much? Try subtracting t1 from
+| the current time using Sys.time() - t1. Don't forget the parentheses at the
+| end of Sys.time(), since it is a function.
+
+> Sys.time()-t1
+Time difference of 6.195252 mins
+
+| You got it right!
+
+  |                                                                              |================================================================      |  92%
+| The same line of thinking applies to addition and the other comparison
+| operators. If you want more control over the units when finding the above
+| difference in times, you can use difftime(), which allows you to specify a
+| 'units' parameter.
+
+...
+
+  |                                                                              |==================================================================    |  94%
+| Use difftime(Sys.time(), t1, units = 'days') to find the amount of time in
+| DAYS that has passed since you created t1.
+
+> diff(Sys.time(), t1, units = 'days')
+Error in Ops.POSIXt(lag, differences) : 
+  '*' not defined for "POSIXt" objects
+> skip()
+
+| Entering the following correct answer for you...
+
+> difftime(Sys.time(), t1, units = 'days')
+Time difference of 0.004626841 days
+
+| Excellent job!
+
+  |                                                                              |====================================================================  |  97%
+| In this lesson, you learned how to work with dates and times in R. While it
+| is important to understand the basics, if you find yourself working with
+| dates and times often, you may want to check out the lubridate package by
+| Hadley Wickham.
+
+...
+
+  |                                                                              |======================================================================| 100%
+| Would you like to receive credit for completing this course on Coursera.org?
+
+1: No
+2: Yes
+
+Selection: 1
+
+| Perseverance, that's the answer.
+
+| You've reached the end of this lesson! Returning to the main menu...
+
+| Would you like to continue with one of these lessons?
+
+1: R Programming Functions
+2: No. Let me start something new.
+
+Selection: 
+
+
+R version 3.5.0 (2018-04-23) -- "Joy in Playing"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> library(swirl)
+
+| Hi! I see that you have some variables saved in your workspace. To keep
+| things running smoothly, I recommend you clean up before starting swirl.
+
+| Type ls() to see a list of the variables in your workspace. Then, type
+| rm(list=ls()) to clear your workspace.
+
+| Type swirl() when you are ready to begin.
+
+> swirl()
+
+| Welcome to swirl! Please sign in. If you've been here before, use the same
+| name as you did then. If you are new, call yourself something unique.
+
+What shall I call you? Brandon
+
+| Would you like to continue with one of these lessons?
+
+1: R Programming Dates and Times
+2: R Programming Functions
+3: No. Let me start something new.
+
+Selection: 3
+
+| Please choose a course, or type 0 to exit swirl.
+
+1: R Programming
+2: Take me to the swirl course repository!
+
+Selection: 1
+
+| Please choose a lesson, or type 0 to return to course menu.
+
+ 1: Basic Building Blocks      2: Workspace and Files     
+ 3: Sequences of Numbers       4: Vectors                 
+ 5: Missing Values             6: Subsetting Vectors      
+ 7: Matrices and Data Frames   8: Logic                   
+ 9: Functions                 10: lapply and sapply       
+11: vapply and tapply         12: Looking at Data         
+13: Simulation                14: Dates and Times         
+15: Base Graphics             
+
+Selection: 14
+
+  |                                                                              |                                                                      |   0%
+
+| R has a special way of representing dates and times, which can be helpful if
+| you're working with data that show how something changes over time (i.e.
+| time-series data) or if your data contain some other temporal information,
+| like dates of birth.
+
+...
+
+  |                                                                              |==                                                                    |   3%
+| Dates are represented by the 'Date' class and times are represented by the
+| 'POSIXct' and 'POSIXlt' classes. Internally, dates are stored as the number
+| of days since 1970-01-01 and times are stored as either the number of seconds
+| since 1970-01-01 (for 'POSIXct') or a list of seconds, minutes, hours, etc.
+| (for 'POSIXlt').
+
+...
+
+  |                                                                              |====                                                                  |   6%
+| Let's start by using d1 <- Sys.Date() to get the current date and store it in
+| the variable d1. (That's the letter 'd' and the number 1.)
+
+> dl <- Sys.Date()
+
+| You almost had it, but not quite. Try again. Or, type info() for more
+| options.
+
+| Type d1 <- Sys.Date() to get the current date and store it in a new variable
+| called d1.
+
+> dl<-Sys.Date()
+
+| One more time. You can do it! Or, type info() for more options.
+
+| Type d1 <- Sys.Date() to get the current date and store it in a new variable
+| called d1.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> d1 <- Sys.Date()
+
+| Your dedication is inspiring!
+
+  |                                                                              |======                                                                |   8%
+| Use the class() function to confirm d1 is a Date object.
+
+> class(dl)
+[1] "Date"
+
+| Not exactly. Give it another go. Or, type info() for more options.
+
+| class(d1) will tell you the class of d1.
+
+> class(dl)
+[1] "Date"
+
+| One more time. You can do it! Or, type info() for more options.
+
+| class(d1) will tell you the class of d1.
+
+> class(dl)
+[1] "Date"
+
+| That's not the answer I was looking for, but try again. Or, type info() for
+| more options.
+
+| class(d1) will tell you the class of d1.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> class(d1)
+[1] "Date"
+
+| Excellent work!
+
+  |                                                                              |========                                                              |  11%
+| We can use the unclass() function to see what d1 looks like internally. Try
+| it out.
+
+> unclass()
+Error in unclass() : 0 arguments passed to 'unclass' which requires 1
+> unclass(dl)
+[1] 17673
+
+| Try again. Getting it right on the first try is boring anyway! Or, type
+| info() for more options.
+
+| Use unclass(d1) to see what d1 looks like internally.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> unclass(d1)
+[1] 17673
+
+| You are doing so well!
+
+  |                                                                              |==========                                                            |  14%
+| That's the exact number of days since 1970-01-01!
+
+...
+
+  |                                                                              |============                                                          |  17%
+| However, if you print d1 to the console, you'll get today's date --
+| YEAR-MONTH-DAY. Give it a try.
+
+> dl
+[1] "2018-05-22"
+
+| Not quite right, but keep trying. Or, type info() for more options.
+
+| Type d1 to print its contents.
+
+> dl
+[1] "2018-05-22"
+
+| Almost! Try again. Or, type info() for more options.
+
+| Type d1 to print its contents.
+
+> dl
+[1] "2018-05-22"
+
+| Nice try, but that's not exactly what I was hoping for. Try again. Or, type
+| info() for more options.
+
+| Type d1 to print its contents.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> d1
+[1] "2018-05-22"
+
+| All that hard work is paying off!
+
+  |                                                                              |==============                                                        |  19%
+| What if we need to reference a date prior to 1970-01-01? Create a variable d2
+| containing as.Date("1969-01-01").
+
+> d2 <- as.date("1969-01-01")
+Error in as.date("1969-01-01") : could not find function "as.date"
+> d2 <- as.Date("1969-01-01")
+
+| Keep working like that and you'll get there!
+
+  |                                                                              |================                                                      |  22%
+| Now use unclass() again to see what d2 looks like internally.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> unclass(d2)
+[1] -365
+
+| You got it right!
+
+  |                                                                              |==================                                                    |  25%
+| As you may have anticipated, you get a negative number. In this case, it's
+| -365, since 1969-01-01 is exactly one calendar year (i.e. 365 days) BEFORE
+| 1970-01-01.
+
+...
+
+  |                                                                              |===================                                                   |  28%
+| Now, let's take a look at how R stores times. You can access the current date
+| and time using the Sys.time() function with no arguments. Do this and store
+| the result in a variable called t1.
+
+> tl <- Sys.time
+
+| Almost! Try again. Or, type info() for more options.
+
+| t1 <- Sys.time() will store the current date and time in a variable called
+| t1.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> t1 <- Sys.time()
+
+| You are quite good my friend!
+
+  |                                                                              |=====================                                                 |  31%
+| View the contents of t1.
+
+> tl
+function () 
+.POSIXct(.Internal(Sys.time()))
+<bytecode: 0x000000001b295a18>
+<environment: namespace:base>
+
+| That's not the answer I was looking for, but try again. Or, type info() for
+| more options.
+
+| Type t1 to view its contents.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> t1
+[1] "2018-05-22 15:40:48 CDT"
+
+| Keep working like that and you'll get there!
+
+  |                                                                              |=======================                                               |  33%
+| And check the class() of t1.
+
+> class(tl)
+[1] "function"
+
+| Almost! Try again. Or, type info() for more options.
+
+| View the class of t1 with class(t1).
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> class(t1)
+[1] "POSIXct" "POSIXt" 
+
+| That's a job well done!
+
+  |                                                                              |=========================                                             |  36%
+| As mentioned earlier, POSIXct is just one of two ways that R represents time
+| information. (You can ignore the second value above, POSIXt, which just
+| functions as a common language between POSIXct and POSIXlt.) Use unclass() to
+| see what t1 looks like internally -- the (large) number of seconds since the
+| beginning of 1970.
+
+> unclass(tl)
+function () 
+.POSIXct(.Internal(Sys.time()))
+<bytecode: 0x000000001b295a18>
+<environment: namespace:base>
+
+| Not exactly. Give it another go. Or, type info() for more options.
+
+| Use unclass(t1) to see how many seconds have passed since the beginning of
+| 1970.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> unclass(t1)
+[1] 1527021649
+
+| Excellent work!
+
+  |                                                                              |===========================                                           |  39%
+| By default, Sys.time() returns an object of class POSIXct, but we can coerce
+| the result to POSIXlt with as.POSIXlt(Sys.time()). Give it a try and store
+| the result in t2.
+
+> t2 <- as.POSIX1t(Sys.time())
+Error in as.POSIX1t(Sys.time()) : could not find function "as.POSIX1t"
+> skip()
+
+| Entering the following correct answer for you...
+
+> t2 <- as.POSIXlt(Sys.time())
+
+| You are doing so well!
+
+  |                                                                              |=============================                                         |  42%
+| Check the class of t2.
+
+> class(t2)
+[1] "POSIXlt" "POSIXt" 
+
+| Keep working like that and you'll get there!
+
+  |                                                                              |===============================                                       |  44%
+| Now view its contents.
+
+> t2
+[1] "2018-05-22 15:42:13 CDT"
+
+| You got it right!
+
+  |                                                                              |=================================                                     |  47%
+| The printed format of t2 is identical to that of t1. Now unclass() t2 to see
+| how it is different internally.
+
+> unclass(t2)
+$`sec`
+[1] 13.45724
+
+$min
+[1] 42
+
+$hour
+[1] 15
+
+$mday
+[1] 22
+
+$mon
+[1] 4
+
+$year
+[1] 118
+
+$wday
+[1] 2
+
+$yday
+[1] 141
+
+$isdst
+[1] 1
+
+$zone
+[1] "CDT"
+
+$gmtoff
+[1] -18000
+
+attr(,"tzone")
+[1] ""    "CST" "CDT"
+
+| You are amazing!
+
+  |                                                                              |===================================                                   |  50%
+| t2, like all POSIXlt objects, is just a list of values that make up the date
+| and time. Use str(unclass(t2)) to have a more compact view.
+
+> str(unclass(t2))
+List of 11
+ $ sec   : num 13.5
+ $ min   : int 42
+ $ hour  : int 15
+ $ mday  : int 22
+ $ mon   : int 4
+ $ year  : int 118
+ $ wday  : int 2
+ $ yday  : int 141
+ $ isdst : int 1
+ $ zone  : chr "CDT"
+ $ gmtoff: int -18000
+ - attr(*, "tzone")= chr [1:3] "" "CST" "CDT"
+
+| All that practice is paying off!
+
+  |                                                                              |=====================================                                 |  53%
+| If, for example, we want just the minutes from the time stored in t2, we can
+| access them with t2$min. Give it a try.
+
+> t2$min
+[1] 42
+
+| All that practice is paying off!
+
+  |                                                                              |=======================================                               |  56%
+| Now that we have explored all three types of date and time objects, let's
+| look at a few functions that extract useful information from any of these
+| objects -- weekdays(), months(), and quarters().
+
+...
+
+  |                                                                              |=========================================                             |  58%
+| The weekdays() function will return the day of week from any date or time
+| object. Try it out on d1, which is the Date object that contains today's
+| date.
+
+> weekdays(dl)
+[1] "Tuesday"
+
+| Nice try, but that's not exactly what I was hoping for. Try again. Or, type
+| info() for more options.
+
+| Try weekdays(d1) to get the day of the week.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> weekdays(d1)
+[1] "Tuesday"
+
+| Excellent work!
+
+  |                                                                              |===========================================                           |  61%
+| The months() function also works on any date or time object. Try it on t1,
+| which is the POSIXct object that contains the current time (well, it was the
+| current time when you created it).
+
+> months(t1)
+[1] "May"
+
+| You nailed it! Good job!
+
+  |                                                                              |=============================================                         |  64%
+| The quarters() function returns the quarter of the year (Q1-Q4) from any date
+| or time object. Try it on t2, which is the POSIXlt object that contains the
+| time at which you created it.
+
+> quarters(t2)
+[1] "Q2"
+
+| Your dedication is inspiring!
+
+  |                                                                              |===============================================                       |  67%
+| Often, the dates and times in a dataset will be in a format that R does not
+| recognize. The strptime() function can be helpful in this situation.
+
+...
+
+  |                                                                              |=================================================                     |  69%
+| strptime() converts character vectors to POSIXlt. In that sense, it is
+| similar to as.POSIXlt(), except that the input doesn't have to be in a
+| particular format (YYYY-MM-DD).
+
+...
+
+  |                                                                              |===================================================                   |  72%
+| To see how it works, store the following character string in a variable
+| called t3: "October 17, 1986 08:24" (with the quotes).
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> t3 <- "October 17, 1986 08:24"
+
+| You nailed it! Good job!
+
+  |                                                                              |====================================================                  |  75%
+| Now, use strptime(t3, "%B %d, %Y %H:%M") to help R convert our date/time
+| object to a format that it understands. Assign the result to a new variable
+| called t4. (You should pull up the documentation for strptime() if you'd like
+| to know more about how it works.)
+
+> strptime(t3, "%B, %d, %Y, %H:%M")
+[1] NA
+
+| One more time. You can do it! Or, type info() for more options.
+
+| t4 <- strptime(t3, "%B %d, %Y %H:%M") will convert our date/time object to a
+| format that R understands.
+
+> t4 <- strptime(t3, "%B, %d, %Y, %H:%M")
+
+| Nice try, but that's not exactly what I was hoping for. Try again. Or, type
+| info() for more options.
+
+| t4 <- strptime(t3, "%B %d, %Y %H:%M") will convert our date/time object to a
+| format that R understands.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> t4 <- strptime(t3, "%B %d, %Y %H:%M")
+
+| Perseverance, that's the answer.
+
+  |                                                                              |======================================================                |  78%
+| Print the contents of t4.
+
+> t4
+[1] "1986-10-17 08:24:00 CDT"
+
+| You nailed it! Good job!
+
+  |                                                                              |========================================================              |  81%
+| That's the format we've come to expect. Now, let's check its class().
+
+> class(t4)
+[1] "POSIXlt" "POSIXt" 
+
+| Perseverance, that's the answer.
+
+  |                                                                              |==========================================================            |  83%
+| Finally, there are a number of operations that you can perform on dates and
+| times, including arithmetic operations (+ and -) and comparisons (<, ==,
+| etc.)
+
+...
+
+  |                                                                              |============================================================          |  86%
+| The variable t1 contains the time at which you created it (recall you used
+| Sys.time()). Confirm that some time has passed since you created t1 by using
+| the 'greater than' operator to compare it to the current time: Sys.time() >
+| t1
+
+> t1<Sys.time()
+[1] TRUE
+
+| Almost! Try again. Or, type info() for more options.
+
+| Sys.time() > t1 will tell you that the current time is after the time
+| contained in t1 (which was the current time when you created it).
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> Sys.time() > t1
+[1] TRUE
+
+| You got it right!
+
+  |                                                                              |==============================================================        |  89%
+| So we know that some time has passed, but how much? Try subtracting t1 from
+| the current time using Sys.time() - t1. Don't forget the parentheses at the
+| end of Sys.time(), since it is a function.
+
+> Sys.time()-t1
+Time difference of 6.195252 mins
+
+| You got it right!
+
+  |                                                                              |================================================================      |  92%
+| The same line of thinking applies to addition and the other comparison
+| operators. If you want more control over the units when finding the above
+| difference in times, you can use difftime(), which allows you to specify a
+| 'units' parameter.
+
+...
+
+  |                                                                              |==================================================================    |  94%
+| Use difftime(Sys.time(), t1, units = 'days') to find the amount of time in
+| DAYS that has passed since you created t1.
+
+> diff(Sys.time(), t1, units = 'days')
+Error in Ops.POSIXt(lag, differences) : 
+  '*' not defined for "POSIXt" objects
+> skip()
+
+| Entering the following correct answer for you...
+
+> difftime(Sys.time(), t1, units = 'days')
+Time difference of 0.004626841 days
+
+| Excellent job!
+
+  |                                                                              |====================================================================  |  97%
+| In this lesson, you learned how to work with dates and times in R. While it
+| is important to understand the basics, if you find yourself working with
+| dates and times often, you may want to check out the lubridate package by
+| Hadley Wickham.
+
+...
+
+  |                                                                              |======================================================================| 100%
+| Would you like to receive credit for completing this course on Coursera.org?
+
+1: No
+2: Yes
+
+Selection: 1
+
+| Perseverance, that's the answer.
+
+| You've reached the end of this lesson! Returning to the main menu...
+
+| Would you like to continue with one of these lessons?
+
+1: R Programming Functions
+2: No. Let me start something new.
+
+Selection: 2
+
+| Please choose a course, or type 0 to exit swirl.
+
+1: R Programming
+2: Take me to the swirl course repository!
+
+Selection: 1
+
+| Please choose a lesson, or type 0 to return to course menu.
+
+ 1: Basic Building Blocks      2: Workspace and Files        3: Sequences of Numbers       4: Vectors                    5: Missing Values             6: Subsetting Vectors      
+ 7: Matrices and Data Frames   8: Logic                      9: Functions                 10: lapply and sapply         11: vapply and tapply         12: Looking at Data         
+13: Simulation                14: Dates and Times           15: Base Graphics             
+
+Selection: 13
+
+  |                                                                                                                                                                                          |                                                                                                                                                                                  |   0%
+
+| One of the great advantages of using a statistical programming language like R is its vast collection of tools for simulating random numbers.
+
+...
+
+  |                                                                                                                                                                                          |=====                                                                                                                                                                             |   3%
+| This lesson assumes familiarity with a few common probability distributions, but these topics will only be discussed with respect to random number generation. Even if you have no prior
+| experience with these concepts, you should be able to complete the lesson and understand the main ideas.
+
+...
+
+  |                                                                                                                                                                                          |===========                                                                                                                                                                       |   6%
+| The first function we'll use to generate random numbers is sample(). Use ?sample to pull up the documentation.
+
+> ?sample
+starting httpd help server ... done
+
+| You got it!
+
+  |                                                                                                                                                                                          |================                                                                                                                                                                  |   9%
+| Let's simulate rolling four six-sided dice: sample(1:6, 4, replace = TRUE).
+
+> sample(1:6,4,replace=TRUE)
+[1] 4 3 2 2
+
+| Perseverance, that's the answer.
+
+  |                                                                                                                                                                                          |======================                                                                                                                                                            |  12%
+| Now repeat the command to see how your result differs. (The probability of rolling the exact same result is (1/6)^4 = 0.00077, which is pretty small!)
+
+> sample(1:6,4,replace=TRUE)
+[1] 3 6 2 3
+
+| That's the answer I was looking for.
+
+  |                                                                                                                                                                                          |===========================                                                                                                                                                       |  15%
+| sample(1:6, 4, replace = TRUE) instructs R to randomly select four numbers between 1 and 6, WITH replacement. Sampling with replacement simply means that each number is "replaced" after
+| it is selected, so that the same number can show up more than once. This is what we want here, since what you roll on one die shouldn't affect what you roll on any of the others.
+
+...
+
+  |                                                                                                                                                                                          |================================                                                                                                                                                  |  18%
+| Now sample 10 numbers between 1 and 20, WITHOUT replacement. To sample without replacement, simply leave off the 'replace' argument.
+
+> sample(1:20, 10)
+ [1]  8  4 20  2 14 12 15  6  5 19
+
+| Keep working like that and you'll get there!
+
+  |                                                                                                                                                                                          |======================================                                                                                                                                            |  21%
+| Since the last command sampled without replacement, no number appears more than once in the output.
+
+...
+
+  |                                                                                                                                                                                          |===========================================                                                                                                                                       |  24%
+| LETTERS is a predefined variable in R containing a vector of all 26 letters of the English alphabet. Take a look at it now.
+
+> LETTERS
+ [1] "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
+
+| Keep up the great work!
+
+  |                                                                                                                                                                                          |=================================================                                                                                                                                 |  27%
+| The sample() function can also be used to permute, or rearrange, the elements of a vector. For example, try sample(LETTERS) to permute all 26 letters of the English alphabet.
+
+> sample(LETTERS)
+ [1] "G" "J" "R" "C" "H" "W" "S" "D" "M" "Q" "L" "E" "A" "F" "K" "T" "I" "X" "U" "Z" "V" "O" "B" "P" "N" "Y"
+
+| You got it right!
+
+  |                                                                                                                                                                                          |======================================================                                                                                                                            |  30%
+| This is identical to taking a sample of size 26 from LETTERS, without replacement. When the 'size' argument to sample() is not specified, R takes a sample equal in size to the vector
+| from which you are sampling.
+
+...
+
+  |                                                                                                                                                                                          |===========================================================                                                                                                                       |  33%
+| Now, suppose we want to simulate 100 flips of an unfair two-sided coin. This particular coin has a 0.3 probability of landing 'tails' and a 0.7 probability of landing 'heads'.
+
+...
+
+  |                                                                                                                                                                                          |=================================================================                                                                                                                 |  36%
+| Let the value 0 represent tails and the value 1 represent heads. Use sample() to draw a sample of size 100 from the vector c(0,1), with replacement. Since the coin is unfair, we must
+| attach specific probabilities to the values 0 (tails) and 1 (heads) with a fourth argument, prob = c(0.3, 0.7). Assign the result to a new variable called flips.
+
+> sample(100,c(0,1), replace=TRUE,prob = (0.3,0.7)
+Error: unexpected ',' in "sample(100,c(0,1), replace=TRUE,prob = (0.3,"
+> skip()
+
+| Entering the following correct answer for you...
+
+> flips <- sample(c(0,1), 100, replace = TRUE, prob = c(0.3, 0.7))
+
+| You are doing so well!
+
+  |                                                                                                                                                                                          |======================================================================                                                                                                            |  39%
+| View the contents of the flips variable.
+
+> flips
+  [1] 1 1 0 0 1 0 1 1 0 1 1 0 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1 1 1 1 0 1 0 1 0 1 1 1 1 1 0 1 1 0 1 1 1 1 0 0 0 1 1 0 1 1 1 1 1 1 1 1 1 0 0 1 1 0 0 1 1 1 1 0 0 1 1 1 1 0 1 1 1 1 1 1 0 1
+ [92] 1 1 0 1 1 0 1 0 1
+
+| Your dedication is inspiring!
+
+  |                                                                                                                                                                                          |============================================================================                                                                                                      |  42%
+| Since we set the probability of landing heads on any given flip to be 0.7, we'd expect approximately 70 of our coin flips to have the value 1. Count the actual number of 1s contained in
+| flips using the sum() function.
+
+> sum(flips)
+[1] 73
+
+| Nice work!
+
+  |                                                                                                                                                                                          |=================================================================================                                                                                                 |  45%
+| A coin flip is a binary outcome (0 or 1) and we are performing 100 independent trials (coin flips), so we can use rbinom() to simulate a binomial random variable. Pull up the
+| documentation for rbinom() using ?rbinom.
+
+> ?rbinom
+
+| Your dedication is inspiring!
+
+  |                                                                                                                                                                                          |======================================================================================                                                                                            |  48%
+| Each probability distribution in R has an r*** function (for "random"), a d*** function (for "density"), a p*** (for "probability"), and q*** (for "quantile"). We are most interested in
+| the r*** functions in this lesson, but I encourage you to explore the others on your own.
+
+...
+
+  |                                                                                                                                                                                          |============================================================================================                                                                                      |  52%
+| A binomial random variable represents the number of 'successes' (heads) in a given number of independent 'trials' (coin flips). Therefore, we can generate a single random variable that
+| represents the number of heads in 100 flips of our unfair coin using rbinom(1, size = 100, prob = 0.7). Note that you only specify the probability of 'success' (heads) and NOT the
+| probability of 'failure' (tails). Try it now.
+
+> rbinom(1,size=100,prob=0.7)
+[1] 77
+
+| Excellent job!
+
+  |                                                                                                                                                                                          |=================================================================================================                                                                                 |  55%
+| Equivalently, if we want to see all of the 0s and 1s, we can request 100 observations, each of size 1, with success probability of 0.7. Give it a try, assigning the result to a new
+| variable called flips2.
+
+> flips2<-rbinom(100,size=1,prob=0.7)
+
+| That's correct!
+
+  |                                                                                                                                                                                          |======================================================================================================                                                                            |  58%
+| View the contents of flips2.
+
+> flips2
+  [1] 0 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 0 1 0 1 0 1 1 1 0 0 0 1 1 0 0 1 0 1 1 0 1 1 1 0 1 1 1 1 0 0 0 1 0 0 0 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1 0 1 1 1 0 1 1 0 1 1 1 1 0 0 1 0
+ [92] 1 1 1 0 1 1 1 0 1
+
+| That's a job well done!
+
+  |                                                                                                                                                                                          |============================================================================================================                                                                      |  61%
+| Now use sum() to count the number of 1s (heads) in flips2. It should be close to 70!
+
+> sum(flips(heads))
+Error in flips(heads) : could not find function "flips"
+> skip()
+
+| Entering the following correct answer for you...
+
+> sum(flips2)
+[1] 69
+
+| You nailed it! Good job!
+
+  |                                                                                                                                                                                          |=================================================================================================================                                                                 |  64%
+| Similar to rbinom(), we can use R to simulate random numbers from many other probability distributions. Pull up the documentation for rnorm() now.
+
+> ?rnorm
+
+| You got it right!
+
+  |                                                                                                                                                                                          |=======================================================================================================================                                                           |  67%
+| The standard normal distribution has mean 0 and standard deviation 1. As you can see under the 'Usage' section in the documentation, the default values for the 'mean' and 'sd' arguments
+| to rnorm() are 0 and 1, respectively. Thus, rnorm(10) will generate 10 random numbers from a standard normal distribution. Give it a try.
+
+> rnorm(10)
+ [1] -1.56107355  0.38799098 -0.59686122 -0.03573134 -0.88858291 -0.83456159  0.42499784  0.21164323  0.93032259  1.41759653
+
+| That's a job well done!
+
+  |                                                                                                                                                                                          |============================================================================================================================                                                      |  70%
+| Now do the same, except with a mean of 100 and a standard deviation of 25.
+
+> rnorm(10,100,25)
+ [1]  36.18669  42.66425 139.30607  64.13382  74.26505  51.44330  81.95869  40.23753 109.68456  67.82056
+
+| That's the answer I was looking for.
+
+  |                                                                                                                                                                                          |=================================================================================================================================                                                 |  73%
+| Finally, what if we want to simulate 100 *groups* of random numbers, each containing 5 values generated from a Poisson distribution with mean 10? Let's start with one group of 5
+| numbers, then I'll show you how to repeat the operation 100 times in a convenient and compact way.
+
+...
+
+  |                                                                                                                                                                                          |=======================================================================================================================================                                           |  76%
+| Generate 5 random values from a Poisson distribution with mean 10. Check out the documentation for rpois() if you need help.
+
+> rpois(5,10)
+[1] 10 11 11 10 16
+
+| Keep working like that and you'll get there!
+
+  |                                                                                                                                                                                          |============================================================================================================================================                                      |  79%
+| Now use replicate(100, rpois(5, 10)) to perform this operation 100 times. Store the result in a new variable called my_pois.
+
+> replicate(100,rpois(5,10))
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25] [,26] [,27] [,28] [,29] [,30] [,31] [,32]
+[1,]    7    5   15    9   10    6   11   18   13    12    10     8    14    11    16     8     7     8    11     8    10     6    13     9     6     6    11     9    15    10    11     9
+[2,]   13   11   14    8   12    7   11   10   12    10     9     8     7     3     7    12     9     8     7    12    16     5     9    11     9    10     5    10    14    16    14    11
+[3,]    5   12    7    7    6   18   11   11   10     8     7    13    16     6     7     6    12    10    10    11    12     8    12     7     7     9    11     9    11     4    14    11
+[4,]   11    7    7   11   14    6   11   12   13     8     6     9    16    10     9    13    11    16    11    10    11    11    11     5    14    13     5     9     8    14    14     9
+[5,]   15    8   11   11    7    4   12    6    9    13     8    11    18    10     9    11    13    17    10    13     9    11    12     5     8     9     9    10    15    14     7    15
+     [,33] [,34] [,35] [,36] [,37] [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49] [,50] [,51] [,52] [,53] [,54] [,55] [,56] [,57] [,58] [,59] [,60] [,61] [,62]
+[1,]    11     8     6    12    11     6     7    11     9     8    16    10    11     8     7    14     9     7     3     6    11    13     8     6     9    10    19     7     7     8
+[2,]    14     6     9    10    10    12     2    11    10    13    13     8     9     5    13     5     7    12    15     7    14     4    10    11     7    11    11     6     6     8
+[3,]     7    11     9     9    10     9    15     5     4     7    15    13    11    12     5    10     8     7    13     5     8    14    14    10    12    11     7    15    16    12
+[4,]    11    10    13    12    11     8     6     8    10     7    10    13     7     8    13    15    11    11    12    10    10    11     7     7    12    10    11     7    14    12
+[5,]     6    11    13     8    11     8    15     7    13     8     7    13    11    14    10     7    16    12     8     8     7     9     9     5    13    10    10     9    11     8
+     [,63] [,64] [,65] [,66] [,67] [,68] [,69] [,70] [,71] [,72] [,73] [,74] [,75] [,76] [,77] [,78] [,79] [,80] [,81] [,82] [,83] [,84] [,85] [,86] [,87] [,88] [,89] [,90] [,91] [,92]
+[1,]    11     6     6    11     4    10    12    10    14     9    11    12    10     8    13    15    11     9    10    10    11    10     6     7    15     9    10     5    11    11
+[2,]     9     4     9    11    10    10     7     8    12     7    12    12     9    13    11     8    10     8    12     9     9    11     9     6     7    10     7    14    12     8
+[3,]    11     4     7    15     8    10    11    13    12    13    14     6    11     7     4    11    10     7    12    13     8    10    14     8     9     9     9    13    17    11
+[4,]    15     6     6    14     9    10     4     9     7    13     5     7    11    14    14    11    10     3    10    16    12    13     8     9    12     9     4     9    10     7
+[5,]     9    14     9     6    16    13     9    15    10     9    18    10     8    13    10     9    17     7     6     7     5    10     8    10    10     7    15    14    11     6
+     [,93] [,94] [,95] [,96] [,97] [,98] [,99] [,100]
+[1,]    19    18    10     9     7    10     9      7
+[2,]     8     6     8     4    13     9    14      4
+[3,]    10     8     7     8     6    10    12     10
+[4,]    11     9     5    18    15    10    10     10
+[5,]    12     9     9     3     9     8    11     11
+
+| You're close...I can feel it! Try it again. Or, type info() for more options.
+
+| my_pois <- replicate(100, rpois(5, 10)) will repeat the operation 100 times and store the result.
+
+> skip()
+
+| Entering the following correct answer for you...
+
+> my_pois <- replicate(100, rpois(5, 10))
+
+| Excellent job!
+
+  |                                                                                                                                                                                          |==================================================================================================================================================                                |  82%
+| Take a look at the contents of my_pois.
+
+> my_pois
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25] [,26] [,27] [,28] [,29] [,30] [,31] [,32]
+[1,]    6    5    8    6    6   15    8   14    6    17     9    11    13    10     4     3     9    12     4    19    16     8    10    13     9    14     3     6     8     5    10    14
+[2,]   10    6   13    8   13   10   16   15   11     6     7    14     8    14    16     2    13     6    12     9     6     2     8    13    13    13    13     4    11     7    10     9
+[3,]   16    9   21    9   12   12   11   19   12    13     8    12     7    12     3     8    20     5    10     4     9    14     8    11    13     8    14     8    13    14    10    14
+[4,]   13   10    6   11    8    7   10    7    9    12    11     7     8     9     9     7    12     9     8    11    10    11    13    11    14    11    10     8     7     9     6     9
+[5,]   16    6    9    8    8    7    9    8    8    14    10     3    13    15    13    10    10    15     7     9     3     9    10    13    12    15     6    12     7    10    14     9
+     [,33] [,34] [,35] [,36] [,37] [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49] [,50] [,51] [,52] [,53] [,54] [,55] [,56] [,57] [,58] [,59] [,60] [,61] [,62]
+[1,]     9     9     9    12     6     9    11     8    12     9    13     6    10    15     9     9     9     9    15    18    13     8    14     9    19    10    11     9     8    12
+[2,]     7     6     7    11     8     9    11    11    13    11     7     8     8     7    12     9     9    11    13     7     9    13    12     9    11    12    10    12     4    12
+[3,]     8    14    17     9    13    14    11     8    14     6    10     9     4    10     2     8    10    11    17     7     6    16    12    10    12     7     9     9     5    12
+[4,]    14    14     5    13    14     8    15     8    11     8    12    13     9    15    10     9     8    10    11    11    12    16    12    14    12     4    11    16     4     9
+[5,]     7     6    13    19     4    12    12     5     9     6    11    18    16    10    12     7    11     9     7     9     9    11    14    13    14    10     7     8     7     3
+     [,63] [,64] [,65] [,66] [,67] [,68] [,69] [,70] [,71] [,72] [,73] [,74] [,75] [,76] [,77] [,78] [,79] [,80] [,81] [,82] [,83] [,84] [,85] [,86] [,87] [,88] [,89] [,90] [,91] [,92]
+[1,]     7     9     8     7     8     8     6     8    11    10    11    15    10    11     6    11    15     6     5     8    12    12    13     8     6    10    10    11    10    12
+[2,]     4     7     7    14     7    12     8    15    11    12    12    10    11    12     9     8    11     5    10    15     7    14    10    10    10    10    10     9    15    12
+[3,]    10    19    10    14     7     8    13     3     9    10    12     9    13    14     8    12     9     8    10     8     6    10    16    13     9     8    10    13     9    13
+[4,]     9    10    10    10    10     7    10     8     6    11     7     7     6    13     8    10     9    12     5    14     5     9     9    11    17    10     8     9     8     8
+[5,]    15    12    14     7     5     9     9     9     4    14     6    11    12    14    14    10     9     8    11    13     4    11    11    10    11    12     9     7    15    13
+     [,93] [,94] [,95] [,96] [,97] [,98] [,99] [,100]
+[1,]     8    10    11    11    10     8    12     15
+[2,]    14    13     8    11     7     6    11      8
+[3,]     7    17     8    14    10     7     4     13
+[4,]    16     9    11    10    10    17    11      5
+[5,]    15     7     4     9    12    10    12     14
+
+| That's the answer I was looking for.
+
+  |                                                                                                                                                                                          |=======================================================================================================================================================                           |  85%
+| replicate() created a matrix, each column of which contains 5 random numbers generated from a Poisson distribution with mean 10. Now we can find the mean of each column in my_pois using
+| the colMeans() function. Store the result in a variable called cm.
+
+> cm<-colMeans(my_pois)
+
+| That's correct!
+
+  |                                                                                                                                                                                          |============================================================================================================================================================                      |  88%
+| And let's take a look at the distribution of our column means by plotting a histogram with hist(cm).
+
+> hist(cm)
+
+| You're the best!
+
+  |                                                                                                                                                                                          |==================================================================================================================================================================                |  91%
+| Looks like our column means are almost normally distributed, right? That's
+| the Central Limit Theorem at work, but that's a lesson for another day!
+
+...
+
+  |                                                                                                                                                                                          |=======================================================================================================================================================================           |  94%
+| All of the standard probability distributions are built into R, including exponential (rexp()), chi-squared (rchisq()), gamma (rgamma()), .... Well, you see the pattern.
+
+...
+
+  |                                                                                                                                                                                          |=============================================================================================================================================================================     |  97%
+| Simulation is practically a field of its own and we've only skimmed the surface of what's possible. I encourage you to explore these and other functions further on your own.
+
+...
+
+  |                                                                                                                                                                                          |==================================================================================================================================================================================| 100%
+| Would you like to receive credit for completing this course on Coursera.org?
+
+1: No
+2: Yes
+
+Selection: 1
+
+| You are amazing!
+
+| You've reached the end of this lesson! Returning to the main menu...
+
+| Would you like to continue with one of these lessons?
+
+1: R Programming Functions
+2: No. Let me start something new.
+
+Selection: 
+
