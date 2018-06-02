@@ -1,0 +1,72 @@
+---
+title: "Homework4"
+author: "Brandon"
+date: "June 1, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##1a.  Installed FiveThirtyEight data.
+
+```{r}
+install.packages("fivethirtyeight", repos = 'http://cran.us.r-project.org')
+library(fivethirtyeight)
+```
+
+##1b.  Assigned the 18th dataset (or college_all_ages) as the object "df"
+
+```{r}
+df <- college_all_ages
+```
+
+## 1c. This dataset "college_all_ages" was analyzed as part of the story 'The Economic Guide to Picking a College Major'.https://fivethirtyeight.com/features/The-Economic-Guide-to-Picking-a-College/
+
+##1d. with the R command "dim()", give the dimensions and column names "colnames()"
+
+```{r}
+dim(df)
+colnames(df)
+```
+              
+#2a. Column names and then counts the number of columns but not rows.
+
+```{r}
+colnames(df)
+ncol(df)
+```
+
+#2b.Generate a count of each unique major_category and assign it to major_count.
+
+```{r}
+library(plyr)
+major_count <- count(df, vars=c("major_category"))
+print(major_count)
+```
+
+#2c.	par(las=2) before the plot; barplot of major_count; label the title with something informative; label x and y axis; change color; assign major_category lables to their respective bar; flip the barplot horizontal  use barplot()
+
+```{r}
+barplot(major_count$freq, names.arg=major_count$major_category,las=2,main = "College Students by Major Category",xlab = "Major Category",ylab = "Frequency",col = "darkred", horiz = TRUE,ylim = c(0,30))
+```
+
+
+
+
+
+
+##2d.	Fivethirtyeight data to CSV (df file)
+
+```{r}
+
+write.csv(college_all_ages, file = "Fivethirtyeight.csv")
+```
+
+
+
+GITHUB REPO
+
+https://github.com/bdelahoussaye/6306_Homework_Files
+
