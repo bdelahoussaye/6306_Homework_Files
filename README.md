@@ -10,4 +10,6 @@ The files are all denoted with a numerical "n" typically following the text "hom
 
 This repo will also contain associated data sets, as appropriate, utilized in completing the homework.  As an example, the file "fivethirtyeight.csv" contains the .csv of the data 'college_all_ages' utilized in the "Homework4" content.  This data - 'college_all_ages' was pulled from the repo of https://github.com/rudeboybert/fivethirtyeight.  This repo is also branched on this particular github account (as of 6/1/18) for reference.  
 
+For understanding of how certain committed files tie together (how they are related), please check the commit notes and comments.
+
 For questions:  bdelahoussaye@mail.smu.edu
